@@ -1,6 +1,8 @@
-from random import randint
-from django.utils import timezone
 from datetime import timedelta
+from random import randint
+
+from django.utils import timezone
+
 
 def generate_otp():
     otp = randint(100000,999999)

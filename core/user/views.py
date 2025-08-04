@@ -1,13 +1,15 @@
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm,MyUserUpdateForm
-from .models import *
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
-from django.conf import settings
-from .services import generate_otp,is_code_valid
+from django.shortcuts import render, redirect, get_object_or_404
+
+from .forms import CustomUserCreationForm, MyUserUpdateForm
+from .models import *
+from .services import generate_otp, is_code_valid
+
 
 def login_user(request):
     if request.method == 'POST':
