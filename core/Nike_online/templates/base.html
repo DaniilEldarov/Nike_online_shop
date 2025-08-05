@@ -1,6 +1,16 @@
-<!DOCTYPE html>
 {% load static %}
 <html class="no-js" lang="zxx">
+
+<!-- Lightbox CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
+<style>
+    .product-img:hover .zoom-icon {
+        display: block;
+        cursor: zoom-in;
+    }
+</style>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -23,6 +33,9 @@
     <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 </head>
+
+<!-- Lightbox JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
 <body>
     <!-- Preloader Start -->
