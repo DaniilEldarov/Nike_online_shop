@@ -1,16 +1,6 @@
 {% load static %}
 <html class="no-js" lang="zxx">
 
-<!-- Lightbox CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-
-<style>
-    .product-img:hover .zoom-icon {
-        display: block;
-        cursor: zoom-in;
-    }
-</style>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -32,19 +22,23 @@
     <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+     <!-- Lightbox CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
 </head>
 
-<!-- Lightbox JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-
 <body>
+   <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                    <img src="{% static 'assets/img/logo/Nike.png' %}" alt="Nike" style="width: 200px; height: auto;">
                 </div>
             </div>
         </div>
@@ -68,15 +62,15 @@
                                             <div class="select-itms">
                                                 <select name="select" id="select1">
                                                     <option value="">USA</option>
-                                                    <option value="">SPN</option>
-                                                    <option value="">CDA</option>
+                                                    <option value="">RU</option>
+                                                    <option value="">KG</option>
                                                     <option value="">USD</option>
                                                 </select>
                                             </div>
                                         </form>
                                     </div>
                                     <ul class="contact-now">
-                                        <li>+777 2345 7886</li>
+                                        <li>+996500784777</li>
                                     </ul>
                                 </div>
                                 <div class="header-info-right">
@@ -98,7 +92,9 @@
                             <!-- Logo -->
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                                 <div class="logo">
-                                    <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                                    <a href="index.html">
+                                        <img src="{% static 'assets/img/logo/Nike2.png' %}" alt="Nike" class="img-fluid" style="max-width: 200px;">
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
