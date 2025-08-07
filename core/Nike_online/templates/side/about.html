@@ -1,0 +1,138 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content%}
+  <!-- slider Area Start-->
+  <div class="slider-area ">
+    <!-- Mobile Menu -->
+    <div class="single-slider slider-height2 d-flex align-items-center" data-background="{% static 'assets/img/hero/category.jpg'%}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap text-center">
+                        <h2>About</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- slider Area End-->
+    
+    <!-- product list part start-->
+    <section class="about_us padding_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="about_us_content">
+                        <h5>Our Mission</h5>
+                        <h3>We believe in more than just products — we believe in people. We champion equality, break barriers, and stand with athletes who use their platforms for change. That’s why we’re not just a brand — we’re a mindset, a drive, a culture.</h3>
+                        <div class="about_us_video">
+                            <img src="{% static 'assets/img/about_us_video.png'%}" alt="#" class="img-fluid">
+                            <a class="about_video_icon popup-youtube" href="https://www.youtube.com/watch?v=DWHB6nTyKDI"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product list part end-->
+
+    <!-- feature part here -->
+    <section class="feature_part section_padding">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-6">
+                    <div class="feature_part_tittle">
+                        <h3>To bring inspiration and innovation to every athlete in the world.*
+And if you have a body, you are an athlete.</h3>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="feature_part_content">
+                        <p>At Nike, our journey began in 1964, when a track coach, Bill Bowerman, and his athlete, Phil Knight, came together with a simple idea: athletes deserved better footwear. What started as a handshake partnership evolved into a global movement. In 1971, we became Nike — named after the Greek goddess of victory — and since then, we’ve been committed to one mission:</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="{% static 'assets/img/icon/feature_icon_1.svg'%}" alt="#">
+                        <h4>Credit Card Support</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="{% static 'assets/img/icon/feature_icon_2.svg'%}" alt="#">
+                        <h4>Online Order</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="{% static 'assets/img/icon/feature_icon_3.svg'%}" alt="#">
+                        <h4>Free Delivery</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="{% static 'assets/img/icon/feature_icon_4.svg'%}" alt="#">
+                        <h4>Product with Gift</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- feature part end -->
+    
+    <!-- client review part here -->
+    <section class="client_review">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="client_review_slider owl-carousel">
+                        <div class="single_client_review">
+                            <div class="client_img">
+                                <img src="{% static 'assets/img/client.png'%}" alt="#">
+                            </div>
+                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
+                            <h5>- Micky Mouse</h5>
+                        </div>
+                        <div class="single_client_review">
+                            <div class="client_img">
+                                <img src="{% static 'assets/img/client_1.png'%}" alt="#">
+                            </div>
+                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
+                            <h5>- Micky Mouse</h5>
+                        </div>
+                        <div class="single_client_review">
+                            <div class="client_img">
+                                <img src="{% static 'assets/img/client_2.png'%}" alt="#">
+                            </div>
+                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
+                            <h5>- Micky Mouse</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- client review part end -->
+
+    <!-- subscribe part here -->
+    <section class="subscribe_part section_padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="subscribe_part_content">
+                        <h2>Get promotions & updates!</h2>
+                        <p>If you want to get news about updates write down your email and click on buttton subscribe.</p>
+                        <div class="subscribe_form">
+                            <input type="email" placeholder="Enter your mail">
+                            <a href="#" class="btn_1">Subscribe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- subscribe part end -->
+{% endblock %}

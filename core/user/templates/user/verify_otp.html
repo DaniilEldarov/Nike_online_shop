@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Code{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Enter Verification Code</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="code">Verification Code:</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">Verify</button>
+    </form>
+
+    <!-- Resend code form/button -->
+        <p>if you want to resend password <a href="{% url 'resend_code' user.id %}">click here>></a></p>
+</div>
+{% endblock %}
+

@@ -40,15 +40,15 @@ class OrderItem(models.Model):
     Product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
-class Cart(models.Model):
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-
-
-
 class CartItems(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    cart = models.ManyToManyField(Cart)
     quantity = models.IntegerField()
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    cart = models.ManyToManyField(CartItems)
+
 
 class Rating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='ratings')
