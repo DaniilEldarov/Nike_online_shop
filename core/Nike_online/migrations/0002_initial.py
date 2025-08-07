@@ -1,0 +1,56 @@
+import django.db.models.deletion
+from django.conf import settings
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+        ('Nike_online', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name='cart',
+            name='id_User',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
+            model_name='cartitems',
+            name='id_basket',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Nike_online.cart'),
+        ),
+        migrations.AddField(
+            model_name='order',
+            name='id_User',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
+            model_name='orderitem',
+            name='id_order',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Nike_online.order'),
+        ),
+        migrations.AddField(
+            model_name='product',
+            name='image',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='Nike_online.image'),
+        ),
+        migrations.AddField(
+            model_name='orderitem',
+            name='id_Product',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Nike_online.product'),
+        ),
+        migrations.AddField(
+            model_name='category',
+            name='id_Product',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Nike_online.product'),
+        ),
+        migrations.AddField(
+            model_name='cartitems',
+            name='id_Product',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Nike_online.product'),
+        ),
+    ]

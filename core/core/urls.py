@@ -14,15 +14,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from Nike_online import views  # Импорт ваших views
+from django.contrib import admin
+from django.urls import path,include
+from Nike_online import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),  # Главная страница
-    path('products/', include('Nike_online.urls')),  # URL для продуктов
+    path('', include('Nike_online.urls')),
+    path('', views.index, name='home'),  # <-- Вот это добавь для /
+    path('add_product_cart/<int:product_id>/<int:quantity>', views.add_product_cart,name='add_product_cart'),
     path('user/', include('user.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
