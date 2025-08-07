@@ -1,15 +1,6 @@
+
 {% load static %}
 <html class="no-js" lang="zxx">
-
-<!-- Lightbox CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-
-<style>
-    .product-img:hover .zoom-icon {
-        display: block;
-        cursor: zoom-in;
-    }
-</style>
 
 <head>
     <meta charset="utf-8">
@@ -32,19 +23,23 @@
     <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+     <!-- Lightbox CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
 </head>
 
-<!-- Lightbox JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-
 <body>
+   <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                    <img src="{% static 'assets/img/logo/Nike.png' %}" alt="Nike" style="width: 200px; height: auto;">
                 </div>
             </div>
         </div>
@@ -68,15 +63,15 @@
                                             <div class="select-itms">
                                                 <select name="select" id="select1">
                                                     <option value="">USA</option>
-                                                    <option value="">SPN</option>
-                                                    <option value="">CDA</option>
+                                                    <option value="">RU</option>
+                                                    <option value="">KG</option>
                                                     <option value="">USD</option>
                                                 </select>
                                             </div>
                                         </form>
                                     </div>
                                     <ul class="contact-now">
-                                        <li>+777 2345 7886</li>
+                                        <li>+996500784777</li>
                                     </ul>
                                 </div>
                                 <div class="header-info-right">
@@ -98,7 +93,9 @@
                             <!-- Logo -->
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                                 <div class="logo">
-                                    <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                                    <a href="index.html">
+                                        <img src="{% static 'assets/img/logo/Nike2.png' %}" alt="Nike" class="img-fluid" style="max-width: 200px;">
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
@@ -107,7 +104,7 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">Home</a></li>
-                                            <li><a href="Catagori.html">Catagori</a></li>
+                                            <li><a href="Categori.html">Catagori</a></li>
                                             <li class="hot"><a href="#">Latest</a>
                                                 <ul class="submenu">
                                                     <li><a href="product_list.html">Product list</a></li>
@@ -172,9 +169,9 @@
 
     <!-- Основной контент -->
     <main>
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
+
 
     <!-- Footer -->
     <footer>
@@ -201,7 +198,7 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About</a></li>
+                                    <li><a href="{% url 'about'%}">About</a></li>
                                     <li><a href="#">Offers & Discounts</a></li>
                                     <li><a href="#">Get Coupon</a></li>
                                     <li><a href="#">Contact Us</a></li>
@@ -218,19 +215,6 @@
                                     <li><a href="#">Fashion Accessories</a></li>
                                     <li><a href="#">Man Accessories</a></li>
                                     <li><a href="#">Rubber made Toys</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Support</h4>
-                                <ul>
-                                    <li><a href="#">Frequently Asked Questions</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Report a Payment Issue</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -283,4 +267,3 @@
     <script src="{% static 'assets/js/plugins.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
 </body>
-</html>

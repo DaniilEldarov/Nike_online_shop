@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% block content%}
+<head>
+  <meta charset="UTF-8">
+  <title>Настройки профиля</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <div class="flex justify-start">
+    <div class="w-full max-w-xl ml-32 mt-16 bg-white p-8 rounded-2xl shadow-sm border border-gray-200 space-y-6">
+
+      <h2 class="text-2xl font-semibold text-gray-800">Настройки профиля</h2>
+
+      <!-- Username -->
+      <div>
+        <label for="username" class="block text-sm text-gray-600 mb-1">Имя пользователя:</label>
+        <input type="text" id="username" value="admin"
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm text-gray-600 mb-1">Адрес электронной почты:</label>
+        <input type="email" id="email" value="admin@admin.com"
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- 2FA -->
+      <div class="flex items-center">
+        <input type="checkbox" id="is2fa"
+               class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        <label for="is2fa" class="ml-2 text-sm text-gray-700">Включить 2FA</label>
+      </div>
+
+      <!-- Save Button -->
+      <div>
+        <button type="submit"
+                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-sm transition">
+          Сохранить
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+{% endblock %}
