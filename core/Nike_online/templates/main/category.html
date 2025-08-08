@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Категории товаров</h2>
+
+    {% for category_name, products in category_products.items %}
+        <h3>{{ category_name }}</h3>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3">
+                    <div class="card mb-4 shadow-sm">
+                        {% if product.images.all %}
+                            <img src="{{ product.images.first.image.url }}"
+                                 class="card-img-top"
+                                 alt="{{ product.name }}"
+                                 style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="no-image" style="height: 200px; background: #f5f5f5;"></div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.price }} сом</p>
+
+                            <!-- ⭐ Рейтинг -->
+                            <div class="rating" data-product="{{ product.id }}">
+                                {% for i in "12345" %}
+                                    {% with i|add:"0" as star_val %}
+                                        <span class="star {% if product.user_rating and star_val <= product.user_rating|stringformat:'i' %}text-warning{% elif not product.user_rating and star_val <= product.avg_rating|stringformat:'i' %}text-warning{% endif %}"
+                                              data-rating="{{ star_val }}"
+                                              style="cursor:pointer; font-size: 20px;">
+                                            ★
+                                        </span>
+                                    {% endwith %}
+                                {% endfor %}
+                                {% if product.avg_rating %}
+                                    <small>({{ product.avg_rating }}/5)</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Нет товаров в этой категории.</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.rating .star').forEach(star => {
+    star.addEventListener('click', function () {
+        const rating = this.getAttribute('data-rating');
+        const productId = this.closest('.rating').getAttribute('data-product');
+
+        fetch("{% url 'rate_product' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({
+                rating: rating,
+                product_id: productId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Спасибо за вашу оценку!');
+                location.reload();  // перезагружаем, чтобы обновить рейтинг
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

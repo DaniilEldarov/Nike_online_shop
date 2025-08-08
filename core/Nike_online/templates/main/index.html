@@ -8,16 +8,11 @@
             <div class="single-slider slider-height" data-background="{% static 'assets/img/hero/h1_hero.jpg' %}">
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-between">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
-                            <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-                                <img src="{% static 'assets/img/hero/hero_man.png' %}" alt="">
-                            </div>
-                        </div>
                         <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
                             <div class="hero__caption">
                                 <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
-                                <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br> Collection</h1>
-                                <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
+                                <h1 data-animation="fadeInRight" data-delay=".6s">Летняя <br> Коллекция</h1>
+                                <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2025!</p>
                                 <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
                                     <a href="industries.html" class="btn hero-btn">Shop Now</a>
                                 </div>
@@ -42,10 +37,10 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-6">
                     <div class="single-category mb-30">
-                        <div class="category-img">
+                        <div class="category-img fixed-img">
                             <img src="{% static 'assets/img/categori/cat1.jpg' %}" alt="">
                             <div class="category-caption">
-                                <h2>Owmen`s</h2>
+                                <h2>Sneakers</h2>
                                 <span class="best"><a href="#">Best New Deals</a></span>
                                 <span class="collection">New Collection</span>
                             </div>
@@ -54,22 +49,21 @@
                 </div>
                 <div class="col-xl-4 col-lg-6">
                     <div class="single-category mb-30">
-                        <div class="category-img text-center">
+                        <div class="category-img fixed-img">
                             <img src="{% static 'assets/img/categori/cat2.jpg' %}" alt="">
                             <div class="category-caption">
-                                <span class="collection">Discount!</span>
-                                <h2>Winter Cloth</h2>
-                                <p>New Collection</p>
+                                <h2>Discount!</h2>
+                                <span class="collection">New Collection</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-6">
+                 <div class="col-xl-4 col-lg-6">
                     <div class="single-category mb-30">
-                        <div class="category-img">
+                        <div class="category-img fixed-img">
                             <img src="{% static 'assets/img/categori/cat3.jpg' %}" alt="">
                             <div class="category-caption">
-                                <h2>Man`s Cloth</h2>
+                                <h2>Men’s Cloth</h2>
                                 <span class="best"><a href="#">Best New Deals</a></span>
                                 <span class="collection">New Collection</span>
                             </div>
@@ -80,9 +74,24 @@
         </div>
     </section>
 
-    <!-- Товары -->
+    <!-- Фильтры и поиск -->
     <section class="latest-product-area padding-bottom">
         <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <select class="form-control" id="sort-selector">
+                        <option value="">Сортировка</option>
+                        <option value="price_asc">От дешевых</option>
+                        <option value="price_desc">От дорогих</option>
+                        <option value="rating">По рейтингу</option>
+                        <option value="newest">Сначала новые</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="search-input" placeholder="Поиск товаров...">
+                </div>
+            </div>
+
             <div class="row product-btn d-flex justify-content-end align-items-end">
                 <div class="col-xl-4 col-lg-5 col-md-5">
                     <div class="section-tittle mb-30">
@@ -102,6 +111,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Карточки товаров -->
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -111,7 +121,13 @@
                                 <div class="single-product mb-60">
                                     <div class="product-img" style="position: relative;">
                                         <a href="{% url 'detail' product.id %}">
-                                             <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                                            {% if product.images.first %}
+                                                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 300px; object-fit: cover;">
+                                            {% elif product.image %}
+                                                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: 300px; object-fit: cover;">
+                                            {% else %}
+                                                <img src="{% static 'assets/img/placeholder.jpg' %}" alt="No image" style="width: 100%; height: 300px; object-fit: cover;">
+                                            {% endif %}
                                         </a>
                                         {% if product.is_new %}
                                         <div class="new-product">
@@ -120,14 +136,15 @@
                                         {% endif %}
                                     </div>
                                     <div class="product-caption">
-                                        <div class="product-ratting">
+                                        <div class="product-ratting" data-product-id="{{ product.id }}">
                                             {% for i in "12345" %}
-                                                {% if forloop.counter <= product.rating %}
-                                                    <i class="fas fa-star"></i>
+                                                {% if product.average_rating >= forloop.counter %}
+                                                    <i class="fas fa-star rating-star" data-value="{{ forloop.counter }}"></i>
                                                 {% else %}
-                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star rating-star" data-value="{{ forloop.counter }}"></i>
                                                 {% endif %}
                                             {% endfor %}
+                                            <span class="rating-count">({{ product.ratings.count }})</span>
                                         </div>
                                         <h4><a href="{% url 'detail' product.id %}">{{ product.name }}</a></h4>
                                         <div class="price">
@@ -149,4 +166,49 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Система рейтинга
+document.querySelectorAll('.rating-star').forEach(star => {
+    star.addEventListener('click', function() {
+        const productId = this.closest('.product-ratting').dataset.productId;
+        const ratingValue = this.dataset.value;
+
+        fetch(`/rate-product/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({rating: ratingValue})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                location.reload();
+            }
+        });
+    });
+});
+
+// Фильтрация товаров
+document.getElementById('sort-selector').addEventListener('change', function() {
+    const value = this.value;
+    if(value) {
+        window.location.search = `?sort=${value}`;
+    }
+});
+
+// Поиск товаров
+document.getElementById('search-input').addEventListener('keyup', function(e) {
+    if(e.key === 'Enter') {
+        const query = this.value.trim();
+        if(query) {
+            window.location.search = `?search=${query}`;
+        }
+    }
+});
+</script>
 {% endblock %}

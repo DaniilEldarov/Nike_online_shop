@@ -23,6 +23,27 @@
     <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
+    <style>
+      body {
+        overflow-x: hidden;
+    }
+
+    .dropdown-menu {
+        min-width: 200px;
+        max-width: 90vw;
+        right: 0;
+        left: auto !important;
+    }
+    </style>
+
+    <style> /* Для всех флагов */
+        .flag img {
+            width: 27px;
+            height: 16px;
+            object-fit: contain; /* сохраняет пропорции */
+            display: block; /* убирает лишние отступы */
+        }
+    </style>
      <!-- Lightbox CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 
@@ -103,7 +124,7 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="{% url 'home' %}">Home</a></li>
-                                            <li><a href="{% url 'category' %}">Catagori</a></li>
+                                            <li><a href="{% url 'category' %}">Category</a></li>
                                             <li class="hot"><a href="#">Latest</a>
                                                 <ul class="submenu">
                                                     <li><a href="product_list.html">Product list</a></li>
@@ -265,5 +286,7 @@
     <script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
     <script src="{% static 'assets/js/plugins.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

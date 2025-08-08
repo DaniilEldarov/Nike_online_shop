@@ -1,14 +1,12 @@
 from django.urls import path
-from Nike_online import views
-from .views import *
+from . import views
 
 urlpatterns = [
-    path('register/', register_view, name='register'),
-    path('login/', login_user, name='login'),
-    path('logout/', logout_user, name='logout'),
-    path('verify_code/<int:user_id>', verify_code, name='verify_code'),
-    path('resend_code/<int:user_id>',resend_code,name='resend_code'),
-    path('profile_view/',profile_view,name='profile'),
-    path('', views.index, name='home'),
-    path('category/', views.category, name='category'),
+    path('register/', views.register_view, name='register'),
+    path('verify-register/', views.verify_register_view, name='verify_register'),
+
+    path('login/', views.login_user, name='login'),
+    path('verify-login/', views.verify_login_view, name='verify_login'),
+
+    path('logout/', views.logout_user, name='logout'),
 ]

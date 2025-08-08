@@ -4000,14 +4000,14 @@ input:focus {
 /* line 68, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_h1-hero.scss */
 .slider-area .hero__caption span {
   font-family: "Yellowtail", cursive;
-  color: #2577fd;
+  color: #e91e63;
   font-size: 40px;
   display: inline-block;
 }
 
 /* line 74, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_h1-hero.scss */
 .slider-area .hero__caption h1 {
-  color: #1f2022;
+  color: #ffffff;
   font-family: "Playfair Display", serif;
   text-transform: uppercase;
   font-size: 100px;
@@ -4046,11 +4046,11 @@ input:focus {
 .slider-area .hero__caption p {
   font-family: "Playfair Display", serif;
   font-style: italic;
-  font-size: 20px;
+  font-size: 25px;
   line-height: 1.2;
   font-weight: 300;
-  margin-bottom: 39px;
-  color: #313639;
+  margin-bottom: 40px;
+  color: #2577fd;
   margin-bottom: 50px;
   text-transform: capitalize;
 }

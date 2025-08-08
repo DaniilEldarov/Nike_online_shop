@@ -18,12 +18,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
-from Nike_online import views
+from Nike_online import views as shop_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Nike_online.urls')),
-    path('', views.index, name='home'),  # <-- Вот это добавь для /
     path('add_product_cart/<int:product_id>/<int:quantity>', views.add_product_cart,name='add_product_cart'),
     path('user/', include('user.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

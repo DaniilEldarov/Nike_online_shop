@@ -1,111 +1,118 @@
-from django.conf import settings
-from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect, get_object_or_404
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from .models import EmailVerificationCode
+import random
 
-from .forms import CustomUserCreationForm, MyUserUpdateForm
-from .models import *
-from .services import generate_otp, is_code_valid
+User = get_user_model()
 
 
-from django.shortcuts import render
-
-def index(request):
-    return render(request, 'main/index.html')
-
-def category(request):
-    return render(request, 'main/product_list.html')  # Категорию сам создашь
-
-def login_user(request):
-    if request.method == 'POST':
-        user = authenticate(email=request.POST['email'],password=request.POST['password'])
-        if user:
-            if user.is_2fa_enabled:
-                code=generate_otp()
-                OTP.objects.create(user=user,
-                code=code)
-                send_mail(
-                    "This is your temporary code from BookkingHolding",
-                    f"There your code don't show this code: {code} ",
-                    settings.EMAIL_HOST_USER,
-                    [user.email],
-                    fail_silently=False,
-                )
-                return redirect('verify_code',user_id=user.id)
-            else:
-                login(request, user)
-                messages.success('You have been logged in')
-                return redirect('main_page')
-        else:
-            messages.error(request, 'Invalid username or password')
-    return render(request,'user/login.html',{'form':AuthenticationForm()})
-
-def logout_user(request):
-    logout(request)
-    messages.success(request, 'Logged out successfully')
-    return redirect('main_page')
-
+# ==================
+# РЕГИСТРАЦИЯ
+# ==================
 def register_view(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.save()
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if User.objects.filter(email=email).exists():
+            return render(request, 'register.html', {'error': 'Такой email уже зарегистрирован'})
+
+        # Создаём пользователя (но пока не активируем)
+        user = User.objects.create_user(username=username, email=email, password=password)
+
+        # Генерация кода
+        code = str(random.randint(100000, 999999))
+        EmailVerificationCode.objects.create(user=user, code=code)
+
+        # Отправка кода
+        send_mail(
+            'Код подтверждения регистрации',
+            f'Ваш код: {code}',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False
+        )
+
+        request.session['pending_user_id'] = user.id
+        return redirect('verify_register')
+
+    return render(request, 'register.html')
+
+
+# ==================
+# ПОДТВЕРЖДЕНИЕ РЕГИСТРАЦИИ
+# ==================
+def verify_register_view(request):
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        user_id = request.session.get('pending_user_id')
+
+        try:
+            user = User.objects.get(id=user_id)
+            ver_code = EmailVerificationCode.objects.filter(user=user, code=code).latest('created_at')
             login(request, user)
-            messages.success(request, 'Account created successfully and logged in')
-            return redirect('main_page')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'user/register.html', {'form': form})
+            return redirect('home')
+        except:
+            return render(request, 'verify_register.html', {'error': 'Неверный код'})
 
-def verify_code(request,user_id):
-    user = get_object_or_404(MyUser,id=user_id)
+    return render(request, 'verify_register.html')
+
+
+# ==================
+# ВХОД (ШАГ 1 — проверка логина/пароля и отправка кода)
+# ==================
+def login_user(request):
     if request.method == 'POST':
-        user_input_code=request.POST['code']
-        otp=OTP.objects.filter(code=user_input_code,user=user).last()
-        if otp:
-            if is_code_valid(otp):
-                messages.success(request, 'Your code has been verified \n You successfully logged in')
-                login(request, user)
-            else:
-                # ⏰ Code expired
-                messages.error(request, 'Time-code expired try again later')
-            return redirect('main_page')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email, password=password)
+        if user:
+            code = str(random.randint(100000, 999999))
+            EmailVerificationCode.objects.create(user=user, code=code)
+
+            send_mail(
+                'Код подтверждения входа',
+                f'Ваш код: {code}',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False
+            )
+
+            request.session['login_user_id'] = user.id
+            return redirect('verify_login')
         else:
-            messages.error(request, 'Invalid code')
+            return render(request, 'login.html', {'error': 'Неверный логин или пароль'})
 
-    return render(request, 'user/verify_otp.html', {'user': user})
-
-
-def resend_code(request,user_id):
-    user = MyUser.objects.get(id=user_id)
-    code=generate_otp()
-    otp=OTP(user=user,code=code)
-    otp.save()
-    code = generate_otp()
-    OTP.objects.create(user=user,
-                       code=code)
-    send_mail(
-        "This is your temporary code from BookkingHolding",
-        f"There your code don't show this code: {code} ",
-        settings.EMAIL_HOST_USER,
-        [user.email],
-        fail_silently=False,
-    )
-    return redirect('verify_code', user_id=user.id)
+    return render(request, 'login.html')
 
 
-@login_required(login_url='login')
-def profile_view(request):
-    user = request.user
+# ==================
+# ВХОД (ШАГ 2 — проверка кода)
+# ==================
+def verify_login_view(request):
     if request.method == 'POST':
-        form = MyUserUpdateForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')  # Or wherever you want to go
-    else:
-        form = MyUserUpdateForm(instance=user)
+        code = request.POST.get('code')
+        user_id = request.session.get('login_user_id')
 
-    return render(request, 'user/profile.html', {'form': form})
+        try:
+            user = User.objects.get(id=user_id)
+            ver_code = EmailVerificationCode.objects.filter(user=user, code=code).latest('created_at')
+            login(request, user)
+            return redirect('home')
+        except:
+            return render(request, 'verify_login.html', {'error': 'Неверный код'})
+
+    return render(request, 'verify_login.html')
+
+
+# ==================
+# ВЫХОД
+# ==================
+def logout_user(request):
+    logout(request)
+    return redirect('login')
